@@ -61,7 +61,14 @@ export default function Portfolio() {
         {data?.projects.map((p) => (
           <div className="col" key={p.id}>
             <details className="card border-0 shadow-sm pf-card">
-              <summary className="card-header bg-white p-4 border-0 d-flex justify-content-between align-items-start" style={{ cursor: 'pointer', listStyle: 'none' }}>
+              <summary 
+                className="card-header bg-white p-4 border-0 d-flex justify-content-between align-items-start" 
+                style={{ 
+                  cursor: 'pointer', 
+                  listStyle: 'none',
+                  minHeight: '160px'
+                }}
+              >
                 <div className="me-3 vstack gap-2">
                   <div className="d-flex align-items-center gap-2">
                     <span className="badge rounded-pill bg-primary-subtle text-primary border border-primary-subtle px-3">

@@ -122,7 +122,7 @@ export const projectData = {
     }
   ],
   "otherWorks": [
-    { "title": "라벨인쇄 통합 관리 시스템", "tech": "Next.js 14, Laravel 8", "role": "Full-stack 전체 개발", "contribution": "70%" },
+    { "title": "라벨인쇄 통합 관리 시스템", "tech": "Next.js 14, Laravel 8", "role": "Full-stack 전체 개발", "contribution": "80%" },
     { "title": "달콤커피 공식 앱 (Hybrid)", "tech": "React, Webview", "role": "프론트엔드 마이그레이션", "contribution": "50%" },
     { "title": "HLB 인사관리 시스템", "tech": "PHP, MySQL", "role": "모듈 고도화 및 최적화", "contribution": "80%" },
     { "title": "튠잇 (Tuneit) 서비스", "tech": "React, Nginx", "role": "프론트엔드 전체 구현", "contribution": "100%" }
