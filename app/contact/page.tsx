@@ -5,6 +5,10 @@ export default function Contact() {
   const isProd = process.env.NODE_ENV === 'production';
   const prefix = isProd ? '/dohan-portfolio' : '';
 
+  const startYear = 2020;
+  const currentYear = new Date().getFullYear();
+  const careerYears = currentYear - startYear + 1;
+  
   return (
     <div className="container d-flex align-items-center justify-content-center" style={{ minHeight: 'calc(100vh - 200px)' }}>
       <div className="card shadow-sm border-0 overflow-hidden mx-auto" style={{ maxWidth: '900px', width: '100%' }}>
@@ -23,7 +27,7 @@ export default function Contact() {
                 priority
               />
               <h3 className="fw-bold mb-1">김도한</h3>
-              <p className="text-primary fw-medium mb-0">Web Engineer(Backend)</p> 
+              <p className="text-primary fw-medium mb-0">{careerYears}년 차 소프트웨어 엔지니어</p> 
             </div>
           </div>
 
