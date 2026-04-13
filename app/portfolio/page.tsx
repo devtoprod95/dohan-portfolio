@@ -66,7 +66,8 @@ export default function Portfolio() {
                 style={{ 
                   cursor: 'pointer', 
                   listStyle: 'none',
-                  minHeight: '160px'
+                  minHeight: '160px',
+                  height: '160px'
                 }}
               >
                 <div className="me-3 vstack gap-2">
