@@ -3,7 +3,6 @@ import {
   CodeSlash, 
   Database, 
   CloudCheck, 
-  CheckCircleFill, 
   ArrowRight 
 } from 'react-bootstrap-icons';
 
@@ -13,7 +12,7 @@ export default function Home() {
   const careerYears = currentYear - startYear + 1;
 
   return (
-    <div className="pb-5">
+    <div className="pb-0">
       {/* 1. 헤드 섹션 (Hero) */}
       <section className="py-5 text-center bg-dark text-white shadow-lg">
         <div className="container py-5">
@@ -130,7 +129,7 @@ export default function Home() {
         <hr className="my-5 opacity-10" />
 
         {/* 4. 경력 사항 섹션 */}
-        <section className="mb-5 pb-4">
+        <section className="mb-5 pb-0">
           <h2 className="fw-bold mb-5 border-start border-primary border-4 ps-3">경력 사항</h2>
           <div className="ps-3">
             {[
