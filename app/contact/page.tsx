@@ -1,5 +1,5 @@
 import Image from 'next/image'; // Next.js 이미지 컴포넌트 사용 (권장)
-import { Envelope, Github, GeoAlt, Phone } from 'react-bootstrap-icons'; // 아이콘 추가
+import { Envelope, Github, GeoAlt, Phone, Check2Circle } from 'react-bootstrap-icons'; // 아이콘 추가
 
 export default function Contact() {
   const isProd = process.env.NODE_ENV === 'production';
@@ -73,13 +73,25 @@ export default function Contact() {
                 </div>
               </li>
               
-              <li className="d-flex align-items-center">
+              <li className="d-flex align-items-center mb-4 text-break">
                 <GeoAlt className="text-primary fs-5 me-3 flex-shrink-0" />
                 <div>
                   <strong className="d-block text-dark">Location</strong>
                   <span className="text-secondary">Seoul, South Korea</span>
                 </div>
               </li>
+
+              {/* 병역사항 추가 */}
+              <li className="d-flex align-items-center">
+                <Check2Circle className="text-primary fs-5 me-3 flex-shrink-0" />
+                <div>
+                  <strong className="d-block text-dark">Military Service</strong>
+                  <span className="text-secondary">
+                    2015.10.13 ~ 2017.07.12 육군 병장 만기전역 (26사단 조교)
+                  </span>
+                </div>
+              </li>
+
             </ul>
           </div>
         </div>

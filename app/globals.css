@@ -10,6 +10,7 @@
 }
 
 body {
+  padding-top: 70px; /* 헤더의 대략적인 높이 */
   color: var(--text-main);
   background-color: var(--light-bg);
   line-height: 1.6;

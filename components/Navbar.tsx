@@ -2,9 +2,21 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // 스크롤이 조금이라도 내려가면 배경색 적용
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const isActive = (path: string) => {
     if (!pathname) return "";
@@ -13,9 +25,17 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
+    <nav 
+      className={`navbar navbar-expand-lg navbar-dark fixed-top ${
+        scrolled ? "bg-dark shadow-sm" : "bg-transparent"
+      }`}
+      style={{ 
+        transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
+        paddingTop: '1rem',    // py-3 수준으로 고정
+        paddingBottom: '1rem'  // py-3 수준으로 고정
+      }}
+    >
       <div className="container">
-        {/* 로고 강조 */}
         <Link className="navbar-brand fw-extrabold text-white" href="/">
           KIM DOHAN<span className="text-primary">.</span>
         </Link>
@@ -40,7 +60,6 @@ export default function Navbar() {
             <li className="nav-item">
               <Link className={`nav-link ${isActive('/contact')}`} href="/contact">Contact</Link>
             </li>
-            {/* 외부 링크 아이콘이 있다면 추가하기 좋은 위치 */}
             <li className="nav-item ms-lg-3">
                <a href="https://github.com/devtoprod95" target="_blank" className="btn btn-sm btn-outline-light opacity-75">GitHub</a>
             </li>
