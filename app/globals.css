@@ -84,3 +84,17 @@ html, body {
 .btn-primary:hover {
   background-color: var(--primary-hover);
 }
+
+.fade-in {
+  animation: fadeIn ease 1s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* 요소를 정확히 화면 정중앙에 위치 (부트스트랩의 vh-100과 조합) */
+.min-vh-80 {
+  min-height: 80vh;
+}
