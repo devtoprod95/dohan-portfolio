@@ -2,34 +2,42 @@
 
 import { useEffect, useState } from 'react';
 import './portfolio.css';
+import { projectData } from './projects';
 import { ChevronDown, Tools, Lightbulb, Trophy, GearFill, Link45deg, Building, Calendar3 } from 'react-bootstrap-icons';
 
 export default function Portfolio() {
-  const isProd = process.env.NODE_ENV === 'production';
-  const prefix = isProd ? '/dohan-portfolio' : '';
   const [data, setData] = useState<{ projects: any[], otherWorks: any[] } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = fetch(`${prefix}/data/projects.json`).then(res => res.json());
-    const timer = new Promise(resolve => setTimeout(resolve, 300));
+    const loadData = async () => {
+      setIsLoading(true); // 로딩 시작
 
-    Promise.all([fetchData, timer])
-      .then(([json]) => {
-        const sortedProjects = json.projects.sort((a: any, b: any) => {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        const sortedProjects = [...projectData.projects].sort((a: any, b: any) => {
           const dateA = parseInt(a.period.split(' - ')[0].replace(/\./g, ''));
           const dateB = parseInt(b.period.split(' - ')[0].replace(/\./g, ''));
           return dateB - dateA;
         });
-        setData({ ...json, projects: sortedProjects });
+
+        // 3. 데이터 셋팅
+        setData({ 
+          projects: sortedProjects, 
+          otherWorks: projectData.otherWorks 
+        });
+        
+      } catch (err) {
+        console.error("데이터 처리 실패:", err);
+      } finally {
         setIsLoading(false);
-      })
-      .catch(err => {
-        console.error("Loading failed:", err);
-        setIsLoading(false);
-      });
+      }
+    };
+
+    loadData();
   }, []);
 
+  // 로딩 중일 때 표시 (선택 사항)
   if (isLoading) {
     return (
       <div className="d-flex flex-column justify-content-center align-items-center min-vh-80">

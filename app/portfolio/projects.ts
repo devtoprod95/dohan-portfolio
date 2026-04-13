@@ -1,4 +1,4 @@
-{
+export const projectData = {
   "projects": [
     {
       "id": "open-market-integration",
@@ -127,4 +127,4 @@
     { "title": "HLB 인사관리 시스템", "tech": "PHP, MySQL", "role": "모듈 고도화 및 최적화", "contribution": "80%" },
     { "title": "튠잇 (Tuneit) 서비스", "tech": "React, Nginx", "role": "프론트엔드 전체 구현", "contribution": "100%" }
   ]
-}
+};
