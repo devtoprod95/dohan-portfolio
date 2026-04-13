@@ -5,11 +5,13 @@ import './portfolio.css';
 import { ChevronDown, Tools, Lightbulb, Trophy, GearFill, Link45deg, Building, Calendar3 } from 'react-bootstrap-icons';
 
 export default function Portfolio() {
+  const isProd = process.env.NODE_ENV === 'production';
+  const prefix = isProd ? '/dohan-portfolio' : '';
   const [data, setData] = useState<{ projects: any[], otherWorks: any[] } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = fetch('/data/projects.json').then(res => res.json());
+    const fetchData = fetch(`${prefix}/data/projects.json`).then(res => res.json());
     const timer = new Promise(resolve => setTimeout(resolve, 300));
 
     Promise.all([fetchData, timer])
