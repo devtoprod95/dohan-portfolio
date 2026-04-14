@@ -8,16 +8,20 @@ export default function FloatingDownload() {
   const [isGenerating, setIsGenerating] = useState(false);
   const pathname = usePathname();
 
+  const isProd = process.env.NODE_ENV === 'production';
+  const prefix = isProd ? '/dohan-portfolio' : ''; // 설정하신 레포지토리 이름 확인
+
   // 추출 페이지에서는 버튼 숨김
-  if (pathname === '/pdf-full') return null;
+  if (pathname.includes('/pdf-full')) return null;
 
   const startWorker = () => {
     const iframe = document.getElementById('pdf-worker-iframe') as HTMLIFrameElement;
     if (!iframe || isGenerating) return;
 
     setIsGenerating(true);
-    // iframe에 경로를 주입하여 배경 작업 시작
-    iframe.src = '/pdf-full';
+    
+    // 💡 배포 환경의 서브 경로(prefix)를 포함하여 주입
+    iframe.src = `${prefix}/pdf-full`;
 
     // PDF 생성 완료 및 다운로드 대기 시간 후 상태 초기화
     setTimeout(() => {
