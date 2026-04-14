@@ -2,9 +2,6 @@ import Image from 'next/image';
 import { Envelope, Github, GeoAlt, Phone, Check2Circle, Mortarboard } from 'react-bootstrap-icons'; // Mortarboard 아이콘 추가
 
 export default function Contact() {
-  const isProd = process.env.NODE_ENV === 'production';
-  const prefix = isProd ? '/dohan-portfolio' : '';
-
   const startYear = 2020;
   const currentYear = new Date().getFullYear();
   const careerYears = currentYear - startYear + 1;
@@ -18,7 +15,7 @@ export default function Contact() {
           <div className="col-md-5 bg-light d-flex align-items-center justify-content-center p-5 border-end">
             <div className="text-center">
               <Image 
-                src={`${prefix}/images/dohan.jpeg`}
+                src={`${process.env.NEXT_PUBLIC_PREFIX}/images/dohan.jpeg`}
                 alt="Kim Dohan Profile"
                 width={400}
                 height={400}

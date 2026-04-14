@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   basePath: isProd ? '/dohan-portfolio' : '',
   assetPrefix: isProd ? '/dohan-portfolio/' : '',
   images: { unoptimized: true },
+  env: {
+    NEXT_PUBLIC_PREFIX: isProd ? '/dohan-portfolio' : '',
+  },
 };
 
 export default nextConfig;
