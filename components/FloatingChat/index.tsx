@@ -31,6 +31,10 @@ export default function FloatingChat() {
   const [lastVisible, setLastVisible] = useState<any>(null);   // 무한 스크롤(과거 내역)용 마지막 문서 포인터
   const [loadingMore, setLoadingMore] = useState(false);       // 이전 대화 불러오기 중 로딩 상태
   const [isMobile, setIsMobile] = useState(false);             // 반응형 대응을 위한 모바일 여부
+  const [hasMore, setHasMore] = useState(true);
+
+  const initMsgCnt = 20;
+  const reloadMsgCnt = 10;
 
   // --- 참조 관리 (Refs) ---
   const scrollRef = useRef<HTMLDivElement | null>(null);       // ChatBody의 스크롤 제어를 위한 Ref
@@ -139,7 +143,7 @@ export default function FloatingChat() {
 
     // 1. 초기 20개 메시지 로드
     const initLoad = async () => {
-      const initQ = query(collection(db, "chats"), orderBy("timestamp", "desc"), limit(20));
+      const initQ = query(collection(db, "chats"), orderBy("timestamp", "desc"), limit(initMsgCnt));
       const snapshot = await getDocs(initQ);
       if (!snapshot.empty) {
         const msgs = snapshot.docs.map(doc => ({
@@ -183,8 +187,12 @@ export default function FloatingChat() {
     const prevScrollHeight = scrollRef.current?.scrollHeight || 0;
     
     // 마지막 문서 이후로 10개 더 가져오기
-    const nextQ = query(collection(db, "chats"), orderBy("timestamp", "desc"), startAfter(lastVisible), limit(10));
+    const nextQ = query(collection(db, "chats"), orderBy("timestamp", "desc"), startAfter(lastVisible), limit(reloadMsgCnt));
     const snapshot = await getDocs(nextQ);
+    
+    if (snapshot.empty || snapshot.docs.length < reloadMsgCnt) {
+      setHasMore(false);
+    }
     
     if (!snapshot.empty) {
       const olderMsgs = snapshot.docs.map(doc => ({
@@ -204,7 +212,7 @@ export default function FloatingChat() {
       });
     }
     setLoadingMore(false);
-  }, [lastVisible, loadingMore, userId, processMessages]);
+  }, [lastVisible, loadingMore, userId, processMessages, reloadMsgCnt]);
 
   // [함수: 메시지 전송]
   const handleSendMessage = useCallback(async () => {
@@ -229,7 +237,7 @@ export default function FloatingChat() {
   // --- 스타일 정의 (Memoization으로 불필요한 재계산 방지) ---
   const offcanvasStyle = useMemo<React.CSSProperties>(() => ({
     position: 'fixed', top: 0, left: 0,
-    width: isMobile ? '100vw' : '40vw',
+    width: isMobile ? '90vw' : '50vw',
     maxWidth: isMobile ? 'none' : '500px',
     height: '100vh', backgroundColor: '#fff', zIndex: 11000,
     transform: visible ? 'translateX(0)' : 'translateX(-100%)',
@@ -274,6 +282,7 @@ export default function FloatingChat() {
             scrollRef={scrollRef} 
             onLoadMore={fetchMoreMessages} 
             loadingMore={loadingMore} 
+            hasMore={hasMore}
           />
         </div>
         <ChatInput 
