@@ -32,8 +32,11 @@ export default function FloatingDownload() {
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
     backgroundColor: isGenerating ? '#6c757d' : '#dc3545',
-    color: '#fff', position: 'fixed', left: '25px', bottom: '25px',
-    zIndex: 10000, cursor: isGenerating ? 'not-allowed' : 'pointer'
+    color: '#fff', position: 'fixed', 
+    left: '25px', 
+    bottom: '80px', // 💡 25px에서 95px로 변경 (채팅 버튼 위로!)
+    zIndex: 10000, 
+    cursor: isGenerating ? 'not-allowed' : 'pointer'
   };
 
   return (
@@ -48,7 +51,9 @@ export default function FloatingDownload() {
       
       {isGenerating && (
         <div style={{
-          position: 'fixed', left: '90px', bottom: '35px',
+          position: 'fixed', 
+          left: '90px', 
+          bottom: '90px', // 💡 버튼 위치에 맞춰 상향 조정
           backgroundColor: 'rgba(0,0,0,0.8)', color: '#fff',
           padding: '8px 16px', borderRadius: '30px', fontSize: '0.85rem', zIndex: 9999
         }}>

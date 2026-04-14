@@ -5,8 +5,9 @@ import BootstrapClient from '@/components/BootstrapClient';
 import Navbar from '@/components/Navbar';
 import ScrollButtons from '@/components/ScrollButtons';
 import ScrollToTop from '@/components/ScrollToTop';
-import FloatingDownload from '@/components/FloatingDownload';
 import { Metadata } from 'next';
+import FloatingChat from '@/components/FloatingChat';
+import FloatingDownload from '@/components/FloatingDownload';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -56,6 +57,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </footer>
 
         <FloatingDownload /> 
+        
+        <FloatingChat /> 
+
         <ScrollButtons />
       </body>
     </html>
