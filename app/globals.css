@@ -99,3 +99,14 @@ html, body {
 .min-vh-80 {
   min-height: 80vh;
 }
+
+@media print {
+  .no-print, .fixed-bottom, nav, footer, .btn {
+    display: none !important;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}

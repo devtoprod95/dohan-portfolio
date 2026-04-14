@@ -1,5 +1,5 @@
-import Image from 'next/image'; // Next.js 이미지 컴포넌트 사용 (권장)
-import { Envelope, Github, GeoAlt, Phone, Check2Circle } from 'react-bootstrap-icons'; // 아이콘 추가
+import Image from 'next/image'; 
+import { Envelope, Github, GeoAlt, Phone, Check2Circle, Mortarboard } from 'react-bootstrap-icons'; // Mortarboard 아이콘 추가
 
 export default function Contact() {
   const isProd = process.env.NODE_ENV === 'production';
@@ -38,12 +38,12 @@ export default function Contact() {
               <span className="badge bg-primary rounded-pill">24시간 이내 회신</span>
             </div>
             
-            <p className="text-secondary mb-5">
+            <p className="text-secondary mb-4">
               새로운 프로젝트 제안, 협업 문의, 혹은 저에 대해 더 궁금한 점이 있으시다면 언제든 편하게 연락해 주세요. 성실히 답변 드리겠습니다.
             </p>
 
-            <ul className="list-unstyled mb-0"> {/* mb-5에서 0으로 조정하여 중앙 밸런스 유지 */}
-              <li className="d-flex align-items-center mb-4 text-break">
+            <ul className="list-unstyled mb-0">
+              <li className="d-flex align-items-center mb-3 text-break">
                 <Envelope className="text-primary fs-5 me-3 flex-shrink-0" />
                 <div>
                   <strong className="d-block text-dark">Email</strong>
@@ -53,7 +53,7 @@ export default function Contact() {
                 </div>
               </li>
               
-              <li className="d-flex align-items-center mb-4">
+              <li className="d-flex align-items-center mb-3">
                 <Phone className="text-primary fs-5 me-3 flex-shrink-0" />
                 <div>
                   <strong className="d-block text-dark">Phone</strong>
@@ -63,7 +63,7 @@ export default function Contact() {
                 </div>
               </li>
 
-              <li className="d-flex align-items-center mb-4 text-break">
+              <li className="d-flex align-items-center mb-3 text-break">
                 <Github className="text-primary fs-5 me-3 flex-shrink-0" />
                 <div>
                   <strong className="d-block text-dark">GitHub</strong>
@@ -73,7 +73,16 @@ export default function Contact() {
                 </div>
               </li>
               
-              <li className="d-flex align-items-center mb-4 text-break">
+              {/* 학력 사항 추가 */}
+              <li className="d-flex align-items-center mb-3">
+                <Mortarboard className="text-primary fs-5 me-3 flex-shrink-0" />
+                <div>
+                  <strong className="d-block text-dark">Education</strong>
+                  <span className="text-secondary">신구대학교 컴퓨터공학과 졸업</span>
+                </div>
+              </li>
+
+              <li className="d-flex align-items-center mb-3 text-break">
                 <GeoAlt className="text-primary fs-5 me-3 flex-shrink-0" />
                 <div>
                   <strong className="d-block text-dark">Location</strong>
@@ -81,17 +90,16 @@ export default function Contact() {
                 </div>
               </li>
 
-              {/* 병역사항 추가 */}
+              {/* 병역사항 */}
               <li className="d-flex align-items-center">
                 <Check2Circle className="text-primary fs-5 me-3 flex-shrink-0" />
                 <div>
                   <strong className="d-block text-dark">Military Service</strong>
                   <span className="text-secondary">
-                    2015.10.13 ~ 2017.07.12 육군 병장 만기전역 (26사단 조교)
+                    육군 병장 만기전역 (26사단 조교)
                   </span>
                 </div>
               </li>
-
             </ul>
           </div>
         </div>

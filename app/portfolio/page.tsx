@@ -9,32 +9,40 @@ export default function Portfolio() {
   const [data, setData] = useState<{ projects: any[], otherWorks: any[] } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [openProjectIds, setOpenProjectIds] = useState<string[]>([]);
+  const [isReady, setIsReady] = useState(false); // 💡 렌더링 준비 완료 플래그
 
   useEffect(() => {
     const loadData = async () => {
-      setIsLoading(true); // 로딩 시작
-
+      setIsLoading(true);
       try {
-        await new Promise(resolve => setTimeout(resolve, 300));
-        const sortedProjects = [...projectData.projects].sort((a: any, b: any) => {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const sortedProjects = [...projectData.projects].sort((a, b) => {
           const dateA = parseInt(a.period.split(' - ')[0].replace(/\./g, ''));
           const dateB = parseInt(b.period.split(' - ')[0].replace(/\./g, ''));
           return dateB - dateA;
         });
 
-        // 3. 데이터 셋팅
-        setData({ 
-          projects: sortedProjects, 
-          otherWorks: projectData.otherWorks 
-        });
-        
+        setData({ projects: sortedProjects, otherWorks: projectData.otherWorks });
+
+        // 💡 [핵심] 출력용 페이지일 때
+        if (typeof window !== 'undefined' && window.location.pathname.includes('/pdf-full')) {
+          const allIds = sortedProjects.map((p: any) => p.id);
+          setOpenProjectIds(allIds);
+
+          // 💡 [추가] 리액트 렌더링 후 실제 DOM 요소들에 open 속성 강제 주입
+          setTimeout(() => {
+            const detailsElements = document.querySelectorAll('details.pf-card');
+            detailsElements.forEach((el) => {
+              el.setAttribute('open', 'true');
+            });
+          }, 1000); // 렌더링 완료 시간을 벌어줌
+        }
       } catch (err) {
-        console.error("데이터 처리 실패:", err);
+        console.error(err);
       } finally {
         setIsLoading(false);
       }
     };
-
     loadData();
   }, []);
 
@@ -66,7 +74,7 @@ export default function Portfolio() {
   }
 
   return (
-    <div className="container py-5 fade-in">
+    <div className={`container py-5 ${isReady ? 'pdf-ready' : ''}`}>
       <header className="mb-5 text-center">
         <h1 className="fw-bold display-5 mb-3">Project Portfolio</h1>
         <p className="text-muted fs-5 mx-auto" style={{ maxWidth: '600px' }}>

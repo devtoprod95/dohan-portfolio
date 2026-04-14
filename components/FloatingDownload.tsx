@@ -1,0 +1,59 @@
+"use client";
+
+import { useState } from 'react';
+import { FileEarmarkPdfFill } from 'react-bootstrap-icons';
+import { usePathname } from 'next/navigation';
+
+export default function FloatingDownload() {
+  const [isGenerating, setIsGenerating] = useState(false);
+  const pathname = usePathname();
+
+  // 추출 페이지에서는 버튼 숨김
+  if (pathname === '/pdf-full') return null;
+
+  const startWorker = () => {
+    const iframe = document.getElementById('pdf-worker-iframe') as HTMLIFrameElement;
+    if (!iframe || isGenerating) return;
+
+    setIsGenerating(true);
+    // iframe에 경로를 주입하여 배경 작업 시작
+    iframe.src = '/pdf-full';
+
+    // PDF 생성 완료 및 다운로드 대기 시간 후 상태 초기화
+    setTimeout(() => {
+      setIsGenerating(false);
+      iframe.src = 'about:blank'; // iframe 비우기
+    }, 5000);
+  };
+
+  const btnStyle: React.CSSProperties = {
+    width: '55px', height: '55px', borderRadius: '50%', border: 'none',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+    backgroundColor: isGenerating ? '#6c757d' : '#dc3545',
+    color: '#fff', position: 'fixed', left: '25px', bottom: '25px',
+    zIndex: 10000, cursor: isGenerating ? 'not-allowed' : 'pointer'
+  };
+
+  return (
+    <div className="no-print">
+      <button onClick={startWorker} disabled={isGenerating} style={btnStyle}>
+        {isGenerating ? (
+          <div className="spinner-border spinner-border-sm" />
+        ) : (
+          <FileEarmarkPdfFill size={24} />
+        )}
+      </button>
+      
+      {isGenerating && (
+        <div style={{
+          position: 'fixed', left: '90px', bottom: '35px',
+          backgroundColor: 'rgba(0,0,0,0.8)', color: '#fff',
+          padding: '8px 16px', borderRadius: '30px', fontSize: '0.85rem', zIndex: 9999
+        }}>
+          PDF 생성 중...
+        </div>
+      )}
+    </div>
+  );
+}
