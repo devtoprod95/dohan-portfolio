@@ -40,3 +40,36 @@ summary:focus,
   background: #0d6efd; /* 강조 색상 */
   border-radius: 10px;
 }
+
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 최대 2줄 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 1. 기본 (모바일): 1줄 말줄임 */
+.title-responsive {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* 모바일은 1줄 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+/* 2. PC (992px 이상): 2줄 말줄임 */
+@media (min-width: 992px) {
+  .title-responsive {
+    -webkit-line-clamp: 2; /* PC는 2줄 */
+  }
+}
+
+/* 3. 아코디언이 열렸을 때 (상태에 따라 클래스 부여) */
+.title-open {
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+  overflow: visible !important;
+  word-break: keep-all;
+}

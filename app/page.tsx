@@ -27,7 +27,7 @@ export default function Home() {
           </p>
           <div className="d-grid gap-3 d-sm-flex justify-content-sm-center">
             <Link href="/portfolio" className="btn btn-primary btn-lg px-4 fw-bold">
-              프로젝트 보기 <ArrowRight className="ms-2" />
+              포트폴리오 보기 <ArrowRight className="ms-2" />
             </Link>
             <Link href="/contact" className="btn btn-outline-light btn-lg px-4">문의하기</Link>
           </div>

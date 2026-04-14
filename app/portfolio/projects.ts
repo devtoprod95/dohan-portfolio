@@ -3,22 +3,54 @@ export const projectData = {
     {
       "id": "open-market-integration",
       "company": "셀러허브(온채널)",
+      "bg": "#e7f1ff",
+      "text": "#0d6efd",
       "title": "대형 오픈마켓(11번가, ESM) 상품 및 주문 연동 시스템 구축",
       "subTitle": "멀티 채널 API 통합 및 주문 처리 자동화",
       "period": "2026.01 - 2026.03",
-      "tech": ["PHP (Laravel)", "Laravel Horizon", "Redis", "Open API"],
+      "tech": ["Laravel", "Laravel Horizon", "Redis"],
       "context": "11번가와 ESM(지마켓, 옥션) 등 주요 오픈마켓 플랫폼의 상품 데이터와 주문 정보를 사내 관리 시스템과 실시간으로 동기화해야 했습니다.",
       "challenge": "플랫폼별로 상이한 API 규격과 인증 방식을 표준화하고, 대량의 호출이 발생하는 환경에서 API 제한(Rate Limit)을 준수하며 안정적으로 데이터를 전송하는 것이 과제였습니다.",
       "solution": "플랫폼별 API 명세를 사내 표준 규격으로 변환하는 통합 모듈을 설계하고, Laravel Horizon 기반의 Redis 큐 시스템을 구축해 상품 등록 및 주문 수집 프로세스를 자동화했습니다. 특히 Horizon의 대시보드 모니터링과 태그 기능을 활용해 채널별 비동기 작업의 성공률을 실시간으로 관리하고, API 호출 실패 시 재시도(Retry) 전략을 체계화하여 대량의 트래픽 속에서도 데이터 누락 없는 안정적인 처리 파이프라인을 완성했습니다.",
       "result": "수동으로 관리하던 멀티 채널 업무를 100% 자동화하여 운영 효율을 극대화했으며, Horizon을 통한 정밀한 큐 관리로 주문 처리 누락율을 0%로 유지하며 시스템 신뢰도를 크게 향상시켰습니다."
     },
     {
+      "id": "php-upgrade-83-core",
+      "company": "셀러허브(온채널)",
+      "bg": "#e7f1ff",
+      "text": "#0d6efd",
+      "title": "PHP7.4 -> PHP 8.3 업그레이드 및 안정화",
+      "subTitle": "레거시 코드 베이스의 현대화 및 정적 분석 도입을 통한 시스템 신뢰도 향상",
+      "period": "2025.09 - 2025.12",
+      "tech": ["PHP 8.3", "PHPStan", "Rector", "JIT", "Docker"],
+      "context": "보안 지원이 종료된 PHP 7.4 환경을 최신 8.3 버전으로 전환하여 시스템 보안을 강화하고, 최신 엔진의 성능 이점을 극대화하기 위해 프로젝트를 주도했습니다.",
+      "challenge": "수만 라인에 달하는 레거시 코드의 하위 호환성(BC Break)을 검증해야 했으며, 특히 8.x 버전에서 엄격해진 타입 체크와 내부 함수 변화로 인한 런타임 에러를 0%로 만드는 것이 가장 큰 과제였습니다.",
+      "solution": "먼저 Docker 기반의 격리된 테스트 환경을 구축하여 운영 서비스에 영향이 없는 안전한 업그레이드 기반을 마련했습니다. 이 과정에서 PHPStan(정적 분석 도구)을 도입하여 소스 코드 전반의 잠재적인 런타임 에러를 전수 조사함으로써 타입 불일치나 존재하지 않는 속성 참조 등 수백 개의 잠재적 버그를 사전에 수정했습니다. 또한 Rector를 활용해 반복적인 문법 변경 사항을 자동으로 리팩토링하여 작업 효율을 극대화했으며, 최종적으로 PHP 8.3의 JIT(Just-In-Time) 컴파일러 최적화 설정을 적용하여 시스템 내 CPU 집약적인 연산 로직의 처리 속도를 대폭 개선했습니다.",
+      "result": "메이저 업그레이드 후 장애 발생 0건, 서버 리소스 사용량 약 10% 절감 및 처리 성능 향상"
+    },
+    {
+      "id": "1688-order-sync",
+      "company": "셀러허브(온채널)",
+      "bg": "#e7f1ff",
+      "text": "#0d6efd",
+      "title": "1688 알리바바 주문 상태 실시간 동기화 시스템",
+      "subTitle": "Kafka 기반 Pub/Sub 구조를 활용한 멀티 채널 주문 상태 전파 시스템 설계",
+      "period": "2024.02 - 2025.02",
+      "tech": ["Laravel", "Kafka", "Event-Driven Architecture"],
+      "context": "1688 알리바바에서 발생하는 주문 상태 변화를 사내 프로젝트(Wapp)에 즉시 반영하고, 해당 주문을 생성한 다양한 채널들에 실시간으로 업데이트 정보를 전파해야 했습니다.",
+      "challenge": "단일 주문 업데이트가 다수의 하위 채널에 영향을 미치는 구조에서, 강한 결합(Strong Coupling)으로 인한 시스템 지연을 방지하고 데이터 정합성을 보장하는 것이 핵심이었습니다.",
+      "solution": "Kafka를 메시지 브로커로 활용한 Pub/Sub 아키텍처를 도입했습니다. 1688의 상태 변경 Webhook을 수신하면 Wapp에서 1차 업데이트 후, '주문 업데이트 이벤트'를 발행(Pub)합니다. 이를 구독(Sub)하는 각 채널 서비스들이 비동기적으로 자신의 데이터를 갱신하게 하여 서비스 간 의존성을 완전히 분리했습니다. 결과적으로 특정 채널 시스템에 장애가 발생하더라도 전체 주문 처리 파이프라인에는 영향을 주지 않는 느슨한 결합(Loose Coupling) 구조를 완성했습니다.",
+      "result": "대량의 주문 상태 변경 건에 대해 평균 1초 미만의 실시간 동기화 지연율 달성 및 시스템 확장성 확보"
+    },
+    {
       "id": "1688-main",
       "company": "셀러허브(온채널)",
+      "bg": "#e7f1ff",
+      "text": "#0d6efd",
       "title": "1688 알리바바 상품/주문 통합 관리 시스템",
       "subTitle": "1000만+ 상품 수집 및 실시간 주문 처리 파이프라인 단독 개발",
       "period": "2024.02 - 2025. 02",
-      "tech": ["Laravel 8", "Kafka", "Python", "MySQL", "Docker"],
+      "tech": ["Laravel", "Kafka", "Python", "MySQL", "Docker"],
       "context": "해외 직구 시장 확대를 위해 1688 알리바바 플랫폼의 상품 수집부터 주문까지 전 과정을 API로 사내시스템에 연동이 필요했습니다.",
       "challenge": "방대한 데이터 처리 시 부하와 외부 AI 번역 시스템과의 비동기 통신, 사내 시스템과 연동이 핵심이었습니다.",
       "solution": "많은 데이터를 한꺼번에 처리해도 서버에 무리가 가지 않도록 데이터를 차례대로 줄 세워 처리하는 메시지 시스템(Kafka)을 도입했습니다. 데이터가 사라지지 않도록 3군데에 복사본을 저장하는 설정을 더해 안정성을 높였으며, 특히 시간이 오래 걸리는 AI 번역 작업은 요청과 결과를 비동기로 주고받는 방식을 사용했습니다. 번역이 끝날 때까지 시스템이 멈춰서 기다리는 게 아니라 완료되는 시점에 자동으로 반영되게 설계하여, 외부 시스템의 지연이나 장애에 영향을 받지 않고 대량의 상품을 유실 없이 처리할 수 있는 구조를 완성했습니다.",
@@ -27,10 +59,12 @@ export const projectData = {
     {
       "id": "sh-migration",
       "company": "셀러허브(온채널)",
+      "bg": "#e7f1ff",
+      "text": "#0d6efd",
       "title": "레거시 시스템 마이그레이션",
       "subTitle": "Legacy PHP 및 CI 기반 환경에서 Laravel로 마이그레이션",
-      "period": "2023.05 - 현재",
-      "tech": ["Laravel 8", "PHP 8.0", "CI3"],
+      "period": "2023.05 - 2025.12",
+      "tech": ["Laravel", "PHP", "CI3"],
       "context": "파편화된 레거시 시스템을 현대적 프레임워크로 통합하여 유지보수 효율과 성능을 개선해야 했습니다.",
       "challenge": "기존 PDO 쿼리의 성능을 유지하며 ORM으로 전환하고, 서비스 규모 확장에 따른 메모리 관리 최적화가 필요했습니다.",
       "solution": "기존의 복잡한 로직들을 서비스 컨테이너에 등록하여 시스템 전체에서 필요한 시점에만 불러오는 구조로 개편했습니다. 특히 객체를 매번 새로 생성하지 않고 하나만 만들어 공유하는 싱글톤 패턴을 적용하여 불필요한 메모리 낭비를 줄였고, 필요한 기능을 외부에서 주입해주는 의존성 주입(DI) 방식을 통해 코드의 재사용성을 높였습니다. 이를 통해 서비스 규모가 커지더라도 성능 저하 없이 안정적으로 코드를 관리할 수 있는 기반을 마련했으며, 결과적으로 데이터베이스 쿼리 속도 개선과 함께 유지보수 리소스를 대폭 절감하는 성과를 거두었습니다.",
@@ -39,6 +73,8 @@ export const projectData = {
     {
       "id": "sh-kafka-dist",
       "company": "셀러허브(온채널)",
+      "bg": "#e7f1ff",
+      "text": "#0d6efd",
       "title": "Kafka 기반 대규모 데이터 분산 처리",
       "subTitle": "3만 줄 이상의 대용량 엑셀 적재 파이프라인 구축",
       "period": "2023.11 - 2023.12",
@@ -51,10 +87,12 @@ export const projectData = {
     {
       "id": "sh-rest-api",
       "company": "셀러허브(온채널)",
-      "title": "온채널 REST OpenAPI 및 Swagger 구축",
+      "bg": "#e7f1ff",
+      "text": "#0d6efd",
+      "title": "온채널 OpenAPI 및 Swagger 구축",
       "subTitle": "상품/주문 핵심 도메인 OpenAPI 설계 및 문서화 표준화",
       "period": "2026.03 - 2026.04",
-      "tech": ["Rest API", "Swagger", "Laravel 8"],
+      "tech": ["Rest API", "Swagger", "Laravel", "Throttle"],
       "context": "회사를 이용하는 수많은 공급사와 판매사가 각자의 시스템을 사내 서비스와 직접 연동할 수 있도록 안정적인 외부 노출용 Open API 환경 구축이 필요했습니다.",
       "challenge": "수백 개의 파트너사가 동시에 API를 호출할 때 발생하는 서버 부하를 제어해야 했으며, 외부 개발자들이 쉽게 연동할 수 있도록 일관된 인터페이스 규격과 문서화 표준을 만드는 것이 핵심이었습니다.",
       "solution": "라라벨(Laravel) 프레임워크를 기반으로 공급사와 판매사를 위한 표준 REST API 아키텍처를 설계하고 핵심 기능을 구현했습니다. 특히 대량의 호출이 몰릴 것에 대비해 분당 호출 수(Rate Limit) 정책을 수립하여 시스템 부하를 관리하고, Swagger를 도입해 실시간으로 업데이트되는 API 명세서를 제공하여 외부 개발자의 연동 편의성을 높였습니다. 또한 일관된 인터페이스 설계를 통해 쿠팡이나 네이버 같은 대외 API와의 확장성을 확보하여 안정적인 주문 연동 파이프라인을 완성했습니다.",
@@ -63,6 +101,8 @@ export const projectData = {
     {
       "id": "boost-crawling",
       "company": "부스터스",
+      "bg": "#fff4e5",
+      "text": "#fd7e14",
       "title": "멀티 채널 정산 데이터 자동화 수집 엔진",
       "subTitle": "2차 인증 및 IP 차단 대응 크롤링 시스템 개발",
       "period": "2023.01 - 2023.04",
@@ -75,6 +115,8 @@ export const projectData = {
     {
       "id": "boost-devops",
       "company": "부스터스",
+      "bg": "#fff4e5",
+      "text": "#fd7e14",
       "title": "Docker 기반 크로스 플랫폼 개발 환경 및 CI/CD 구축",
       "subTitle": "M1 Mac 호환 환경 구축 및 Jenkins 파이프라인 자동화",
       "period": "2023.01 - 2023.04",
@@ -87,6 +129,8 @@ export const projectData = {
     {
       "id": "eroom-gsshop",
       "company": "이룸코리아",
+      "bg": "#eafaf1",
+      "text": "#198754",
       "title": "GS SHOP 대규모 상품/주문 관리 시스템 연동",
       "subTitle": "40만+ 상품 관리 및 엔드투엔드 주문 파이프라인 자동화",
       "period": "2022.04 - 2022.06",
@@ -99,6 +143,8 @@ export const projectData = {
     {
       "id": "eroom-optimization",
       "company": "이룸코리아",
+      "bg": "#eafaf1",
+      "text": "#198754",
       "title": "이커머스 서비스 고도화 및 인프라 최적화",
       "subTitle": "DB 부하 66% 절감 및 이미지 캐싱 이슈 해결",
       "period": "2022.09 - 2022.11",
@@ -111,6 +157,8 @@ export const projectData = {
     {
       "id": "dalcom-app",
       "company": "한봄스튜디오",
+      "bg": "#f3e8ff",
+      "text": "#9333ea",
       "title": "달콤커피 공식 앱 하이브리드 리뉴얼",
       "subTitle": "Legacy 웹뷰 프로젝트의 React 마이그레이션 및 하이브리드 통신 구축",
       "period": "2021.09 - 2022.01",
@@ -122,9 +170,9 @@ export const projectData = {
     }
   ],
   "otherWorks": [
-    { "title": "라벨인쇄 통합 관리 시스템", "tech": "Next.js 14, Laravel 8", "role": "Full-stack 전체 개발", "contribution": "80%" },
+    { "title": "라벨인쇄 통합 관리 시스템", "tech": "Next.js 14, Laravel", "role": "Full-stack 전체 개발", "contribution": "80%" },
     { "title": "달콤커피 공식 앱 (Hybrid)", "tech": "React, Webview", "role": "프론트엔드 마이그레이션", "contribution": "50%" },
     { "title": "HLB 인사관리 시스템", "tech": "PHP, MySQL", "role": "모듈 고도화 및 최적화", "contribution": "80%" },
-    { "title": "튠잇 (Tuneit) 서비스", "tech": "React, Nginx", "role": "프론트엔드 전체 구현", "contribution": "100%" }
+    { "title": "튠잇&아차키 홈페이지", "tech": "React, Nginx", "role": "프론트엔드 전체 구현", "contribution": "100%" }
   ]
 };
