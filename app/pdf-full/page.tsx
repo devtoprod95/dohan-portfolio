@@ -1,27 +1,34 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Home from '../page';
 import Portfolio from '../portfolio/page';
 import Contact from '../contact/page';
 
 export default function PdfFullPage() {
+  // 1. 초기값을 빈 문자열로 설정하여 서버 렌더링 시 에러 방지
+  const [prefix, setPrefix] = useState("");
+
   useEffect(() => {
+    // 2. 브라우저 마운트 후에만 실행되므로 window 객체에 안전하게 접근 가능
+    const currentPrefix = process.env.NEXT_PUBLIC_PREFIX || 
+                         (window.location.hostname.includes('github.io') ? '/dohan-portfolio' : '');
+    
+    setPrefix(currentPrefix);
+    console.log("Current Prefix (Client-side):", currentPrefix);
+
     const timer = setTimeout(() => {
       window.print();
     }, 1000);
     return () => clearTimeout(timer);
   }, []);
-  
-  const prefix = process.env.NEXT_PUBLIC_PREFIX || (window.location.hostname.includes('github.io') ? '/dohan-portfolio' : '');
-
-  // 콘솔로 찍어보세요. 운영에서 이게 어떻게 나오는지 보는 게 제일 빠릅니다.
-  console.log("Current Prefix:", prefix);
 
   return (
     <>
-      {/* 💡 href 앞에도 prefix를 붙여줘야 배포 시 CSS를 제대로 긁어옵니다! */}
-      <link rel="stylesheet" href={`${prefix}/css/pdf.css`} />
+      {/* 3. prefix가 설정된 후 올바른 경로로 CSS를 불러옴 */}
+      {prefix !== undefined && (
+        <link rel="stylesheet" href={`${prefix}/css/pdf.css`} />
+      )}
 
       <div className="pdf-container">
         <section id="print-home"><Home /></section>
