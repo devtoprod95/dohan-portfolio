@@ -34,7 +34,11 @@ function ChatBody({ messages, myNickname, scrollRef, onLoadMore, loadingMore, ha
         ref={scrollRef} 
         onScroll={handleScroll}
         className="h-100 overflow-auto p-3"
-        style={{ WebkitOverflowScrolling: 'touch' }}
+        style={{ 
+          WebkitOverflowScrolling: 'touch',
+          touchAction: 'pan-y', // ✅ 세로 스크롤만 명시적으로 허용,
+          overscrollBehavior: 'contain' // ✅ 여기에 추가 (부모로 전파 차단)
+        }}
       >
         {/* ✅ 최상단: 더 이상 데이터가 없을 때만 보여주는 정적 안내 띠 */}
         {!hasMore && messages.length > 0 && (

@@ -40,7 +40,7 @@ export default function FloatingDownload() {
   };
 
   return (
-    <div className="no-print">
+    <div className="no-print d-none d-md-inline-flex">
       <button onClick={startWorker} disabled={isGenerating} style={btnStyle}>
         {isGenerating ? (
           <div className="spinner-border spinner-border-sm" />

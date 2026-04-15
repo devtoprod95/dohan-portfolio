@@ -34,11 +34,11 @@ export default function FloatingChat() {
   const [hasMore, setHasMore] = useState(true);
 
   const initMsgCnt = 20;
-  const reloadMsgCnt = 10;
+  const reloadMsgCnt = 30;
 
   // --- 참조 관리 (Refs) ---
   const scrollRef = useRef<HTMLDivElement | null>(null);       // ChatBody의 스크롤 제어를 위한 Ref
-  const savedScrollY = useRef(0);                              // 채팅창 열 때 기존 바디 스크롤 위치 저장용
+  const touchStartY = useRef(0);
 
   // [함수: 스크롤 최하단 이동]
   // 새 메시지가 올 때나 채팅창을 열 때 가장 아래로 스크롤합니다.
@@ -63,17 +63,47 @@ export default function FloatingChat() {
     });
   }, []);
 
-  // [Effect: 바디 스크롤 고정]
-  // 채팅창이 열려(visible) 있을 때 배경(body)이 스크롤되는 것을 방지합니다.
   useEffect(() => {
-    if (visible) {
-      savedScrollY.current = window.scrollY;
-      document.body.style.cssText = `position:fixed;top:-${savedScrollY.current}px;width:100%;overflow-y:scroll;`;
-    } else {
-      document.body.style.cssText = '';
-      window.scrollTo(0, savedScrollY.current);
+    if (!visible) {
+      document.documentElement.style.scrollBehavior = '';
+      document.body.style.overflow = '';
+      return;
     }
-  }, [visible]);
+
+    document.documentElement.style.scrollBehavior = 'none';
+    document.body.style.overflow = 'hidden';
+
+    const handleGlobalWheel = (e: WheelEvent) => {
+      if (scrollRef.current?.contains(e.target as Node)) return;
+      e.preventDefault();
+      scrollRef.current?.scrollBy({ top: e.deltaY, behavior: 'instant' });
+    };
+
+    // ✅ IIFE 제거, ref로 startY 관리
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (scrollRef.current?.contains(e.target as Node)) return;
+      e.preventDefault();
+      const deltaY = touchStartY.current - e.touches[0].clientY;
+      touchStartY.current = e.touches[0].clientY;
+      scrollRef.current?.scrollBy({ top: deltaY, behavior: 'instant' });
+    };
+
+    window.addEventListener('wheel', handleGlobalWheel, { passive: false, capture: true });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false, capture: true });
+
+    return () => {
+      document.documentElement.style.scrollBehavior = '';
+      document.body.style.overflow = '';
+      window.removeEventListener('wheel', handleGlobalWheel, { capture: true });
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove, { capture: true });
+    };
+  }, [visible]); // ✅ scrollRef는 ref라 의존성 배열 불필요
 
   // [함수: 채팅창 열기/닫기]
   const handleOpen = useCallback(() => {
@@ -93,6 +123,11 @@ export default function FloatingChat() {
   // [Effect: 초기화]
   // 사용자 고유 ID 생성, 닉네임 로드, 모바일 여부 감지
   useEffect(() => {
+    if (typeof window !== 'undefined' && window?.location?.pathname.includes('/pdf-full')) {
+      setMounted(false);
+      return;
+    }
+
     setMounted(true);
     
     // 로컬스토리지 기반 익명 ID 생성
@@ -243,7 +278,8 @@ export default function FloatingChat() {
     transform: visible ? 'translateX(0)' : 'translateX(-100%)',
     transition: 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
     display: 'flex', flexDirection: 'column',
-    boxShadow: '10px 0 30px rgba(0,0,0,0.15)', overflow: 'hidden'
+    boxShadow: '10px 0 30px rgba(0,0,0,0.15)', overflow: 'hidden',
+    overscrollBehavior: 'contain', // ✅ 채팅창 끝에 도달했을 때 배경이 흔들리는 현상 방지
   }), [visible, isMobile]);
 
   if (!mounted) return null;
@@ -259,12 +295,17 @@ export default function FloatingChat() {
       </div>
 
       {/* 2. 배경 오버레이 (클릭 시 닫힘) */}
-      <div onClick={handleClose} style={{
-        position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-        backgroundColor: 'rgba(0,0,0,0.3)', zIndex: 10999,
-        opacity: show ? 1 : 0, pointerEvents: show ? 'auto' : 'none',
-        transition: 'opacity 0.4s ease'
-      }} />
+      {/* 배경 오버레이 (클릭 시 닫힘) */}
+      <div 
+        onClick={handleClose}
+        style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+          backgroundColor: 'rgba(0,0,0,0.3)', zIndex: 10999,
+          opacity: show ? 1 : 0, pointerEvents: show ? 'auto' : 'none',
+          transition: 'opacity 0.4s ease',
+          touchAction: 'none'
+        }} 
+      />
 
       {/* 3. 사이드 채팅창 본체 */}
       <div style={offcanvasStyle}>

@@ -110,3 +110,15 @@ html, body {
     padding: 0;
   }
 }
+
+/* 채팅창이 열렸을 때의 바디 상태 */
+body.chat-open {
+  overflow: hidden !important; /* 스크롤바 제거 */
+  touch-action: none;          /* 모바일 터치 스크롤 방지 */
+  height: 100vh;               /* 높이 고정 */
+}
+
+/* 하지만 채팅창 내부의 스크롤은 허용해야 함 */
+body.chat-open .overflow-auto {
+  touch-action: pan-y !important; /* 채팅창 내 세로 스크롤은 허용 */
+}
