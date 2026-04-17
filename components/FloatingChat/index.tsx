@@ -287,7 +287,7 @@ export default function FloatingChat() {
   return (
     <>
       {/* 1. 플로팅 실행 버튼 */}
-      <div className="no-print" style={{ position: 'fixed', left: '25px', bottom: '15px', zIndex: 10500 }}>
+      <div className="position-fixed bottom-0 start-0 d-flex flex-column align-items-start p-3" style={{ zIndex: 9999 }}>
         <button className="btn btn-primary rounded-pill shadow-lg d-flex align-items-center px-4" onClick={handleOpen} style={{ height: '55px', border: 'none' }}>
           <ChatDotsFill className="me-2" size={18} />
           <span className="fw-bold">커피톡</span>

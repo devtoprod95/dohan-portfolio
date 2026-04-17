@@ -8,6 +8,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 import { Metadata } from 'next';
 import FloatingChat from '@/components/FloatingChat';
 import FloatingDownload from '@/components/FloatingDownload';
+import AIChatBot from '@/components/AIChatBot';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -56,9 +57,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
 
-        <FloatingDownload /> 
+        <FloatingDownload />
         
         <FloatingChat /> 
+
+        <AIChatBot />
 
         <ScrollButtons />
       </body>
