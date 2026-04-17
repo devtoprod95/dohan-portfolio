@@ -4,8 +4,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import Groq from "groq-sdk";
 import { db } from "@/lib/firebase"; 
 import { doc, getDoc } from "firebase/firestore";
-import { SendFill, Robot, XLg, ChatRightDotsFill, Stars } from 'react-bootstrap-icons';
+import { SendFill, Robot, XLg, Stars } from 'react-bootstrap-icons';
 import { FALLBACK_SYSTEM_PROMPT } from '@/constant/chatbot';
+import { GoogleGenAI } from "@google/genai";
 
 const botStyle = `
   @keyframes pulse-green {
@@ -98,27 +99,40 @@ const AIChatBot = () => {
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
     const userMsg = input.trim();
+    
+    // 현재 messages를 히스토리로 변환 (bot/user → model/user)
+    const history = messages
+      .filter(msg => msg.text) // 빈 메시지 제거
+      .map(msg => ({
+        role: msg.role === 'user' ? 'user' : 'model',
+        parts: [{ text: msg.text }]
+      }));
+
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setInput('');
     setIsLoading(true);
 
-    const groq = new Groq({
-      apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
-      dangerouslyAllowBrowser: true
-    });
+    const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_GOOGLE_AI_API_KEY });
 
     try {
-      const chatCompletion = await groq.chat.completions.create({
-        messages: [{ role: "system", content: systemPrompt }, { role: "user", content: userMsg }],
-        model: "llama-3.1-8b-instant", 
-        temperature: 0.6,
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash-lite",
+        contents: [
+          ...history,
+          { role: 'user', parts: [{ text: userMsg }] }
+        ],
+        config: {
+          systemInstruction: { parts: [{ text: systemPrompt }] },
+          temperature: 0.6,
+        }
       });
-      setMessages(prev => [...prev, { role: 'bot', text: chatCompletion.choices[0]?.message?.content || "" }]);
+
+      const botText = response.text || "";
+      setMessages(prev => [...prev, { role: 'bot', text: botText }]);
     } catch (error) {
       setMessages(prev => [...prev, { role: 'bot', text: '잠시 후 다시 시도해주세요.' }]);
-    } finally { 
-      setIsLoading(false); 
-      // ✅ 전송 완료 후 자동으로 포커스 이동
+    } finally {
+      setIsLoading(false);
       setTimeout(() => inputRef.current?.focus(), 50);
     }
   };
