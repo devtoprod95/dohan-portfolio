@@ -39,7 +39,7 @@ export default function ScrollButtons() {
   };
 
   return (
-    <div className="position-fixed bottom-0 end-0 d-flex flex-column align-items-end p-3" style={{ zIndex: 9999 }}>
+    <div className="position-fixed bottom-0 end-0 d-flex flex-column align-items-end p-3 no-print" style={{ zIndex: 9999 }}>
       {/* Up 버튼: showUp이 true일 때만 렌더링 */}
       <button 
         onClick={() => scroll(true)} 
