@@ -195,7 +195,7 @@ const AIChatBot = () => {
         {!isOpen && (
           <div className="ai-hint-bubble text-primary px-3 py-2 shadow-sm mb-2 fw-bold shadow-sm">
             <Robot className="me-2" />
-            도한님에 대해 무엇이든 물어보세요!
+            저에 대해 무엇이든 물어보세요!
           </div>
         )}
 
