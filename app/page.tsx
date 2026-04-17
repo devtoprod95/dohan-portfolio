@@ -3,8 +3,12 @@ import {
   CodeSlash, 
   Database, 
   CloudCheck, 
-  ArrowRight 
+  ArrowRight, 
+  Github,
+  PencilSquare,
+  EnvelopeAtFill
 } from 'react-bootstrap-icons';
+import { SiGithub, SiGmail, SiTistory } from 'react-icons/si';
 
 export default function Home() {
   const startYear = 2020;
@@ -20,6 +24,23 @@ export default function Home() {
             {careerYears}년 차 소프트웨어 엔지니어
           </div>
           <h1 className="display-3 fw-bold mb-3" style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)' }}>김도한</h1>
+          
+          <div className="d-flex justify-content-center gap-4 mb-4">
+            {/* 깃허브 */}
+            <a href="https://github.com/devtoprod95" target="_blank" rel="noopener noreferrer">
+              <SiGithub style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} color="#ffffff" />
+            </a>
+
+            <a href="https://tislwlstnf.tistory.com/" target="_blank" rel="noopener noreferrer">
+              <SiTistory style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} color="#ff5a00" />
+            </a>
+
+            {/* 쥐메일 - 공식 로고 형태 */}
+            <a href="mailto:devtoproduction@gmail.com" target="_blank" rel="noopener noreferrer">
+              <SiGmail style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} color="#EA4335" />
+            </a>
+          </div>
+
           <p className="lead opacity-75 mb-4 mx-auto" style={{ maxWidth: '800px', fontSize: 'clamp(1rem, 3vw, 1.25rem)' }}>
             웹 에이전시의 <strong>신속성, 유연함</strong>과 이커머스 플랫폼의 <strong>전문성</strong>을 바탕으로 <br className="d-none d-md-block"/>
             비즈니스 가치를 만드는 안정적인 백엔드 시스템을 구축합니다.
@@ -65,7 +86,7 @@ export default function Home() {
           <div className="row g-4 ps-2">
             <div className="col-md-6 col-lg-3">
               <div className="card h-100 border-0 shadow-sm p-4">
-                <div className="mb-3 text-primary"><CodeSlash size={32} /></div>
+                <div className="mb-3 text-primary"><CodeSlash style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} /></div>
                 <h4 className="fw-bold">Front-End</h4>
                 <ul className="list-unstyled text-muted small mb-0">
                   <li>• React / Next.js 14</li>
@@ -78,25 +99,28 @@ export default function Home() {
 
             <div className="col-md-6 col-lg-3">
               <div className="card h-100 border-0 shadow-sm p-4 text-white bg-primary">
-                <div className="mb-3"><Database size={32} /></div>
+                <div className="mb-3"><Database style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} /></div>
                 <h4 className="fw-bold">Back-End</h4>
                 <ul className="list-unstyled small opacity-90 mb-0">
                   <li>• PHP 8.x (Laravel, CI3)</li>
+                  <li>• Python 3.x</li>
                   <li>• Node.js (NestJS, Express)</li>
                   <li>• Java (Spring Boot 3.x)</li>
                   <li>• MySQL, Redis, Kafka, ELK</li>
+                  <li>• MariaDB, MongoDB, Firestore, Realtime Database</li>
                 </ul>
               </div>
             </div>
 
             <div className="col-md-6 col-lg-3">
               <div className="card h-100 border-0 shadow-sm p-4">
-                <div className="mb-3 text-primary"><CloudCheck size={32} /></div>
+                <div className="mb-3 text-primary"><CloudCheck style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} /></div>
                 <h4 className="fw-bold">Infra & DevOps</h4>
                 <ul className="list-unstyled text-muted small mb-0">
                   <li>• AWS (EC2, S3, RDS)</li>
                   <li>• Docker, GitHub Actions</li>
                   <li>• Apache, Nginx</li>
+                  <li>• Jenkins</li>
                 </ul>
               </div>
             </div>

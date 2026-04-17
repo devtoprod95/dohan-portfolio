@@ -1,5 +1,7 @@
 import Image from 'next/image'; 
-import { Envelope, Github, GeoAlt, Phone, Check2Circle, Mortarboard } from 'react-bootstrap-icons'; // Mortarboard 아이콘 추가
+import { Envelope, Github, GeoAlt, Phone, Check2Circle, Mortarboard, PersonBadge } from 'react-bootstrap-icons'; // Mortarboard 아이콘 추가
+import { FaAward } from 'react-icons/fa';
+import { SiTistory } from 'react-icons/si';
 
 export default function Contact() {
   const startYear = 2020;
@@ -69,6 +71,16 @@ export default function Contact() {
                   </a>
                 </div>
               </li>
+
+              <li className="d-flex align-items-center mb-3 text-break">
+                <SiTistory className="text-primary fs-5 me-3 flex-shrink-0" />
+                <div>
+                  <strong className="d-block text-dark">Tistory</strong>
+                  <a href="https://tislwlstnf.tistory.com/" target="_blank" className="text-secondary text-decoration-none">
+                    https://tislwlstnf.tistory.com/
+                  </a>
+                </div>
+              </li>
               
               {/* 학력 사항 추가 */}
               <li className="d-flex align-items-center mb-3">
@@ -83,13 +95,13 @@ export default function Contact() {
                 <GeoAlt className="text-primary fs-5 me-3 flex-shrink-0" />
                 <div>
                   <strong className="d-block text-dark">Location</strong>
-                  <span className="text-secondary">Seoul, South Korea</span>
+                  <span className="text-secondary">서울 강동구 성내동</span>
                 </div>
               </li>
 
               {/* 병역사항 */}
               <li className="d-flex align-items-center">
-                <Check2Circle className="text-primary fs-5 me-3 flex-shrink-0" />
+                <FaAward className="text-primary fs-5 me-3 flex-shrink-0" />
                 <div>
                   <strong className="d-block text-dark">Military Service</strong>
                   <span className="text-secondary">

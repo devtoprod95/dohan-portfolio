@@ -76,7 +76,18 @@ const AIChatBot = () => {
   // ✅ 채팅창 열릴 때 포커스
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 100);
+      // 1. 포커스는 즉시 혹은 아주 짧은 지연 후 실행
+      const focusTimer = setTimeout(() => inputRef.current?.focus(), 50);
+
+      // 2. 스크롤은 부드럽게 처리
+      if (scrollRef.current) {
+        scrollRef.current.scrollTo({
+          top: scrollRef.current.scrollHeight,
+          behavior: 'smooth' // 깜빡임 대신 부드러운 이동
+        });
+      }
+
+      return () => clearTimeout(focusTimer);
     }
   }, [isOpen]);
 
