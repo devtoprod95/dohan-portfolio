@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Groq from "groq-sdk";
 import { db } from "@/lib/firebase"; 
 import { doc, getDoc } from "firebase/firestore";
-import { SendFill, Robot, XLg, ChatRightDotsFill } from 'react-bootstrap-icons';
+import { SendFill, Robot, XLg, ChatRightDotsFill, Stars } from 'react-bootstrap-icons';
 import { FALLBACK_SYSTEM_PROMPT } from '@/constant/chatbot';
 
 const botStyle = `
@@ -127,7 +127,7 @@ const AIChatBot = () => {
               <div className="d-flex justify-content-between align-items-center">
                 <div className="d-flex align-items-center">
                   <div className="bg-white rounded-circle me-3 d-flex align-items-center justify-content-center shadow-sm" style={{width: '40px', height: '40px'}}>
-                    <Robot size={24} className="text-primary" />
+                    <Robot style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} className="text-primary" />
                   </div>
                   <div className="text-start">
                     <h6 className="mb-0 fw-bold" style={{ fontSize: '1rem', letterSpacing: '-0.5px' }}>Dohan AI Assistant</h6>
@@ -141,7 +141,7 @@ const AIChatBot = () => {
                   </div>
                 </div>
                 <button className="btn border-0 p-1 text-white opacity-75 shadow-none" onClick={() => setIsOpen(false)}>
-                  <XLg size={20} />
+                  <XLg style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} />
                 </button>
               </div>
             </div>
@@ -185,7 +185,7 @@ const AIChatBot = () => {
                   onClick={handleSend} 
                   disabled={isLoading || !input.trim()}
                 >
-                  <SendFill size={22} />
+                  <SendFill style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} />
                 </button>
               </div>
             </div>
@@ -202,13 +202,14 @@ const AIChatBot = () => {
         <button 
           className="btn btn-primary rounded-circle shadow-lg d-flex align-items-center justify-content-center border-0 p-0" 
           style={{ 
-            width: '60px', height: '60px', 
+            width: 'var(--button-size-base)', 
+            height: 'var(--button-size-base)',
             transition: '0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            transform: isOpen ? 'rotate(180deg)' : 'scale(1)'
+            transform: isOpen ? 'rotate(180deg)' : 'scale(1)',
           }} 
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <XLg size={24} /> : <ChatRightDotsFill size={28} />}
+          {isOpen ? <XLg style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} /> : <Stars style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} />}
         </button>
       </div>
     </>

@@ -34,7 +34,7 @@ function ChatHeader({ myNickname, setMyNickname, onlineCount, onClose }: Props) 
     <div className="bg-primary text-white p-3 shadow-sm">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h5 className="mb-0 small fw-bold d-flex align-items-center">
-          <ChatQuoteFill className="me-2" size={18} /> 실시간 커피톡
+          <ChatQuoteFill className="me-2" style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} /> 실시간 커피톡
         </h5>
         <button className="btn-close btn-close-white" onClick={onClose}></button>
       </div>
@@ -58,7 +58,7 @@ function ChatHeader({ myNickname, setMyNickname, onlineCount, onClose }: Props) 
                 autoFocus
               />
               <button className="btn btn-light btn-sm py-0 px-2" onClick={handleSave}>
-                <CheckLg size={12} />
+                <CheckLg style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} />
               </button>
             </div>
           ) : (
@@ -66,7 +66,7 @@ function ChatHeader({ myNickname, setMyNickname, onlineCount, onClose }: Props) 
               <span className="fw-bold border-bottom border-white border-opacity-50" style={{ fontSize: '13px', lineHeight: '1.2' }}>
                 {myNickname}
               </span>
-              <GearFill className="ms-2 opacity-75" size={14} />
+              <GearFill className="ms-2 opacity-75" style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} />
             </div>
           )}
         </div>

@@ -34,7 +34,7 @@ function ChatInput({ inputValue, setInputValue, onSendMessage }: Props) {
           onKeyDown={handleKeyDown}
         />
         <button className="btn btn-primary px-3" onClick={onSendMessage}>
-          <SendFill size={16} />
+          <SendFill style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} />
         </button>
       </div>
     </div>

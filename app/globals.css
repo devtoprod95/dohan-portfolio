@@ -122,3 +122,17 @@ body.chat-open {
 body.chat-open .overflow-auto {
   touch-action: pan-y !important; /* 채팅창 내 세로 스크롤은 허용 */
 }
+
+:root {
+  --icon-size-base: 22px;   /* 기본(모바일) 사이즈 */
+  --icon-size-large: 28px;
+  --button-size-base: 50px;
+}
+
+@media (min-width: 768px) { /* PC 사이즈 */
+  :root {
+    --icon-size-base: 28px;
+    --icon-size-large: 40px;
+    --button-size-base: 60px;
+  }
+}

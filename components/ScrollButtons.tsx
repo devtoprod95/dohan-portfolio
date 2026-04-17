@@ -32,7 +32,9 @@ export default function ScrollButtons() {
     window.scrollTo({ top: top ? 0 : document.body.scrollHeight, behavior: 'smooth' });
 
   const btnBase = { 
-    width: '50px', height: '50px', borderRadius: '50%', border: 'none', 
+    width: 'var(--button-size-base)', 
+    height: 'var(--button-size-base)',
+    borderRadius: '50%', border: 'none', 
     display: 'flex', alignItems: 'center', justifyContent: 'center', 
     boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
     transition: 'opacity 0.3s ease, transform 0.3s ease' // 부드러운 등장 효과
@@ -51,7 +53,7 @@ export default function ScrollButtons() {
           pointerEvents: showUp ? 'auto' : 'none',
           transform: showUp ? 'scale(1)' : 'scale(0.8)'
         }}>
-        <ArrowUp size={24} color="#fff" />
+        <ArrowUp style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} color="#fff" />
       </button>
 
       {/* Down 버튼: showDown이 true일 때만 렌더링 */}
@@ -64,7 +66,7 @@ export default function ScrollButtons() {
           pointerEvents: showDown ? 'auto' : 'none',
           transform: showDown ? 'scale(1)' : 'scale(0.8)'
         }}>
-        <ArrowDown size={24} color="#fff" />
+        <ArrowDown style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} color="#fff" />
       </button>
     </div>
   );

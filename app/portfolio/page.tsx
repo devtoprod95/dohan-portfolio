@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import './portfolio.css';
+import '@/styles/portfolio.css';
 import { projectData } from './projects';
 import { ChevronDown, Tools, Lightbulb, Trophy, GearFill, Link45deg, Building, Calendar3 } from 'react-bootstrap-icons';
 

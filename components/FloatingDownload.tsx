@@ -24,42 +24,60 @@ export default function FloatingDownload() {
     setTimeout(() => {
       setIsGenerating(false);
       iframe.src = 'about:blank'; // iframe 비우기
-    }, 5000);
-  };
-
-  const btnStyle: React.CSSProperties = {
-    width: '55px', height: '55px', borderRadius: '50%', border: 'none',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-    backgroundColor: isGenerating ? '#6c757d' : '#dc3545',
-    color: '#fff', position: 'fixed', 
-    left: '20px', 
-    bottom: '80px', // 💡 25px에서 95px로 변경 (채팅 버튼 위로!)
-    zIndex: 10000, 
-    cursor: isGenerating ? 'not-allowed' : 'pointer'
+    }, 3000);
   };
 
   return (
-    <div className="no-print d-none d-md-inline-flex">
-      <button onClick={startWorker} disabled={isGenerating} style={btnStyle}>
-        {isGenerating ? (
-          <div className="spinner-border spinner-border-sm" />
-        ) : (
-          <FileEarmarkPdfFill size={24} />
-        )}
-      </button>
-      
-      {isGenerating && (
-        <div style={{
-          position: 'fixed', 
-          left: '85px', 
-          bottom: '90px', // 💡 버튼 위치에 맞춰 상향 조정
-          backgroundColor: 'rgba(0,0,0,0.8)', color: '#fff',
-          padding: '8px 16px', borderRadius: '30px', fontSize: '0.85rem', zIndex: 9999
-        }}>
-          PDF 생성 중...
-        </div>
+   <div 
+    className="no-print d-none d-md-flex flex-column align-items-start p-3" 
+    style={{ 
+      position: 'fixed',
+      zIndex: 10000, 
+      bottom: '70px', // 챗봇 버튼 바로 위에 위치하도록 높이 조절
+      left: '0',
+      width: 'auto',
+      transform: 'none'
+    }}
+  >
+    {/* PDF 생성 중 알림 말풍선 */}
+    {isGenerating && (
+      <div style={{
+        position: 'absolute', 
+        left: '85px', 
+        top: '50%',
+        transform: 'translateY(-50%)',
+        backgroundColor: 'rgba(0,0,0,0.8)', 
+        color: '#fff',
+        whiteSpace: 'nowrap',
+        padding: '8px 16px', 
+        borderRadius: '30px', 
+        fontSize: '0.85rem', 
+        zIndex: 9999
+      }}>
+        PDF 생성 중...
+      </div>
+    )}
+
+    <button 
+      onClick={startWorker} 
+      disabled={isGenerating} 
+      className="btn rounded-circle shadow-lg d-flex align-items-center justify-content-center border-0 p-0"
+      style={{ 
+        width: 'var(--button-size-base)', 
+        height: 'var(--button-size-base)',
+        backgroundColor: isGenerating ? '#cccccc' : '#ee0202ff', // 생성 중엔 회색으로
+        color: '#fff',
+        cursor: isGenerating ? 'not-allowed' : 'pointer',
+        transition: 'all 0.3s ease', // 부드러운 변화
+        opacity: isGenerating ? 0.7 : 1,
+      }} 
+    >
+      {isGenerating ? (
+        <div className="spinner-border spinner-border-sm" />
+      ) : (
+        <FileEarmarkPdfFill style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }}/>
       )}
-    </div>
+    </button>
+  </div>
   );
 }

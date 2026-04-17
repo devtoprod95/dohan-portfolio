@@ -286,11 +286,25 @@ export default function FloatingChat() {
 
   return (
     <>
-      {/* 1. 플로팅 실행 버튼 */}
-      <div className="position-fixed bottom-0 start-0 d-flex flex-column align-items-start p-3" style={{ zIndex: 9999 }}>
-        <button className="btn btn-primary rounded-pill shadow-lg d-flex align-items-center px-4" onClick={handleOpen} style={{ height: '55px', border: 'none' }}>
-          <ChatDotsFill className="me-2" size={18} />
-          <span className="fw-bold">커피톡</span>
+      <div 
+          className="fixed-bottom p-3 d-flex flex-column align-items-start" // align-items-start로 변경
+          style={{ 
+            zIndex: 10000, 
+            bottom: '0', 
+            left: '0',
+            width: 'auto',
+            transform: 'none'
+          }}
+        >
+        <button 
+          className="btn btn-primary rounded-circle shadow-lg d-flex align-items-center justify-content-center border-0 p-0" 
+          style={{ 
+            width: 'var(--button-size-base)', 
+            height: 'var(--button-size-base)',
+          }} 
+          onClick={handleOpen}
+        >
+          <ChatDotsFill style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} />
         </button>
       </div>
 
