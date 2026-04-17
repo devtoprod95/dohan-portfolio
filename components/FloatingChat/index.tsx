@@ -292,7 +292,7 @@ export default function FloatingChat() {
             zIndex: 10000, 
             bottom: '0', 
             left: '0',
-            width: 'auto',
+            width: 'fit-content',
             transform: 'none'
           }}
         >
