@@ -7,11 +7,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { SendFill, Robot, XLg, ChatRightDotsFill } from 'react-bootstrap-icons';
 import { FALLBACK_SYSTEM_PROMPT } from '@/constant/chatbot';
 
-const groq = new Groq({
-  apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
-  dangerouslyAllowBrowser: true
-});
-
 const botStyle = `
   @keyframes pulse-green {
     0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
@@ -95,6 +90,11 @@ const AIChatBot = () => {
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setInput('');
     setIsLoading(true);
+
+    const groq = new Groq({
+      apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
+      dangerouslyAllowBrowser: true
+    });
 
     try {
       const chatCompletion = await groq.chat.completions.create({
