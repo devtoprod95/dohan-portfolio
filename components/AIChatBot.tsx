@@ -40,7 +40,7 @@ const botStyle = `
 
 const AIChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [systemPrompt, setSystemPrompt] = useState('');

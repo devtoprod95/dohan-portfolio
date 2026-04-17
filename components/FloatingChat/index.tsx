@@ -30,7 +30,7 @@ export default function FloatingChat() {
   const [inputValue, setInputValue] = useState("");            // 입력창 텍스트
   const [lastVisible, setLastVisible] = useState<any>(null);   // 무한 스크롤(과거 내역)용 마지막 문서 포인터
   const [loadingMore, setLoadingMore] = useState(false);       // 이전 대화 불러오기 중 로딩 상태
-  const [isMobile, setIsMobile] = useState(false);             // 반응형 대응을 위한 모바일 여부
+  const [isMobile, setIsMobile] = useState<boolean | null>(null); // 반응형 대응을 위한 모바일 여부
   const [hasMore, setHasMore] = useState(true);
 
   const initMsgCnt = 20;

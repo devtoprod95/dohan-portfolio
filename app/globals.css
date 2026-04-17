@@ -1,43 +1,73 @@
 /* app/globals.css */
+
+/* ============================
+   1. CSS 변수 (Variables)
+============================ */
 :root {
-  /* 확실한 컬러 팔레트 정의 */
-  --primary-color: #2563eb;      /* 메인: 트러스트 블루 */
+  --primary-color: #2563eb;
   --primary-hover: #1d4ed8;
-  --sub-color: #64748b;         /* 서브: 슬레이트 그레이 */
-  --dark-bg: #0f172a;           /* 헤더/푸터 배경: 딥 네이비 */
-  --light-bg: #f8fafc;          /* 전체 배경: 아주 밝은 그레이 */
-  --text-main: #1e293b;         /* 본문 텍스트 */
+  --sub-color: #64748b;
+  --dark-bg: #0f172a;
+  --light-bg: #f8fafc;
+  --text-main: #1e293b;
+
+  --icon-size-base: 22px;
+  --icon-size-large: 28px;
+  --button-size-base: 50px;
 }
 
-body {
-  padding-top: 70px; /* 헤더의 대략적인 높이 */
-  color: var(--text-main);
-  background-color: var(--light-bg);
-  line-height: 1.6;
+@media (min-width: 768px) {
+  :root {
+    --icon-size-base: 28px;
+    --icon-size-large: 40px;
+    --button-size-base: 60px;
+  }
 }
 
-/* 좌우 스크롤 방지 */
+
+/* ============================
+   2. 기본 레이아웃 (Base)
+============================ */
 html, body {
   max-width: 100%;
   overflow-x: hidden;
 }
 
+body {
+  padding-top: 70px;
+  color: var(--text-main);
+  background-color: var(--light-bg);
+  line-height: 1.6;
+}
+
+.min-vh-80 {
+  min-height: 80vh;
+}
+
 .row {
-  --bs-gutter-x: 1.5rem; /* 좌우 간격 고정 */
+  --bs-gutter-x: 1.5rem;
   margin-right: 0;
   margin-left: 0;
 }
 
-/* 모바일 전용 좌우 패딩 통일 */
 .container {
   padding-right: 20px !important;
   padding-left: 20px !important;
 }
 
-/* 헤더 커스텀 */
+input,
+textarea,
+select {
+  font-size: 16px !important;
+}
+
+
+/* ============================
+   3. 네비게이션 (Navbar)
+============================ */
 .navbar {
   background-color: var(--dark-bg) !important;
-  padding: 1rem 0; /* 헤더 세로 간격 확장 */
+  padding: 1rem 0;
   transition: all 0.3s ease;
 }
 
@@ -46,9 +76,8 @@ html, body {
   letter-spacing: -0.5px;
 }
 
-/* 네비게이션 링크 간격 및 스타일 */
 .navbar-nav .nav-item {
-  margin-left: 1.5rem; /* 메뉴 아이템 간격 확장 */
+  margin-left: 1.5rem;
 }
 
 .navbar-nav .nav-link {
@@ -62,13 +91,15 @@ html, body {
   color: var(--primary-color) !important;
 }
 
-/* Active 상태: 밑줄 없이 굵기와 색상으로만 강조 */
 .navbar-nav .nav-link.active {
   color: var(--primary-color) !important;
   font-weight: 700;
 }
 
-/* 카드 및 컴포넌트 공통 스타일 */
+
+/* ============================
+   4. 컴포넌트 (Components)
+============================ */
 .card {
   border: 1px solid #e2e8f0;
   border-radius: 12px;
@@ -86,53 +117,44 @@ html, body {
   background-color: var(--primary-hover);
 }
 
+
+/* ============================
+   5. 애니메이션 (Animation)
+============================ */
 .fade-in {
   animation: fadeIn ease 1s;
 }
 
 @keyframes fadeIn {
-  0% { opacity: 0; transform: translateY(10px); }
+  0%   { opacity: 0; transform: translateY(10px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* 요소를 정확히 화면 정중앙에 위치 (부트스트랩의 vh-100과 조합) */
-.min-vh-80 {
-  min-height: 80vh;
+
+/* ============================
+   6. 채팅 (Chat)
+============================ */
+body.chat-open {
+  overflow: hidden !important;
+  touch-action: none;
+  height: 100vh;
 }
 
+body.chat-open .overflow-auto {
+  touch-action: pan-y !important;
+}
+
+
+/* ============================
+   7. 인쇄 (Print)
+============================ */
 @media print {
   .no-print, .fixed-bottom, nav, footer, .btn {
     display: none !important;
   }
-  
+
   body {
     margin: 0;
     padding: 0;
-  }
-}
-
-/* 채팅창이 열렸을 때의 바디 상태 */
-body.chat-open {
-  overflow: hidden !important; /* 스크롤바 제거 */
-  touch-action: none;          /* 모바일 터치 스크롤 방지 */
-  height: 100vh;               /* 높이 고정 */
-}
-
-/* 하지만 채팅창 내부의 스크롤은 허용해야 함 */
-body.chat-open .overflow-auto {
-  touch-action: pan-y !important; /* 채팅창 내 세로 스크롤은 허용 */
-}
-
-:root {
-  --icon-size-base: 22px;   /* 기본(모바일) 사이즈 */
-  --icon-size-large: 28px;
-  --button-size-base: 50px;
-}
-
-@media (min-width: 768px) { /* PC 사이즈 */
-  :root {
-    --icon-size-base: 28px;
-    --icon-size-large: 40px;
-    --button-size-base: 60px;
   }
 }

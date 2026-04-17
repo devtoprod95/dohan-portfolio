@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko" data-scroll-behavior="smooth">
+    <html lang="ko" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className={inter.className}>
         <ScrollToTop />
         <BootstrapClient />
@@ -38,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* 💡 보이지 않는 작업용 통로 (창 안 뜨게 하는 핵심) */}
        <iframe 
           id="pdf-worker-iframe" 
+          suppressHydrationWarning
           style={{ 
             position: 'absolute',
             top: '-9999px',
