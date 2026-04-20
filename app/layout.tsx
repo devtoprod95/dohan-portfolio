@@ -5,12 +5,15 @@ import BootstrapClient from '@/components/BootstrapClient';
 import Navbar from '@/components/Navbar';
 import ScrollButtons from '@/components/ScrollButtons';
 import ScrollToTop from '@/components/ScrollToTop';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import FloatingChat from '@/components/FloatingChat';
 import FloatingDownload from '@/components/FloatingDownload';
 import AIChatBot from '@/components/AIChatBot';
+import PWAHandler from '@/components/PWAHandler';
 
 const inter = Inter({ subsets: ['latin'] });
+
+const prefix = process.env.NEXT_PUBLIC_PREFIX || '';
 
 export const metadata: Metadata = {
   title: "김도한 자기소개서 | Software Engineer",
@@ -22,12 +25,22 @@ export const metadata: Metadata = {
     description: "성실함과 기술력을 겸비한 개발자 김도한입니다.",
     type: "website",
   },
+  manifest: `${prefix}/manifest.json`,
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#000000",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" data-scroll-behavior="smooth" suppressHydrationWarning>
+
       <body className={inter.className}>
+        <PWAHandler />
+
         <ScrollToTop />
         <BootstrapClient />
         <Navbar />

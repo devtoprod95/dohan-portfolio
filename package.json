@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "pwa": "PWA_READY=true next dev --webpack",
     "start": "next start",
     "lint": "eslint"
   },
@@ -17,6 +18,7 @@
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
     "next": "16.2.3",
+    "next-pwa": "^5.6.0",
     "react": "19.2.4",
     "react-bootstrap-icons": "^1.11.6",
     "react-dom": "19.2.4",
