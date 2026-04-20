@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "pwa": "PWA_READY=true next dev --webpack",
     "start": "next start",
     "lint": "eslint"
