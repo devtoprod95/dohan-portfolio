@@ -9,7 +9,7 @@ export default function FloatingDownload() {
   const pathname = usePathname();
 
   // 추출 페이지에서는 버튼 숨김
-  if (pathname.includes('/pdf-full')) return null;
+  if (pathname.includes('/pdf')) return null;
 
   const startWorker = () => {
     const iframe = document.getElementById('pdf-worker-iframe') as HTMLIFrameElement;
@@ -18,7 +18,7 @@ export default function FloatingDownload() {
     setIsGenerating(true);
     
     // 💡 배포 환경의 서브 경로(prefix)를 포함하여 주입
-    iframe.src = `${process.env.NEXT_PUBLIC_PREFIX}/pdf-full`;
+    iframe.src = `${process.env.NEXT_PUBLIC_PREFIX}/pdf`;
 
     // PDF 생성 완료 및 다운로드 대기 시간 후 상태 초기화
     setTimeout(() => {

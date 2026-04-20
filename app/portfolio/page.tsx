@@ -25,7 +25,7 @@ export default function Portfolio() {
         setData({ projects: sortedProjects, otherWorks: projectData.otherWorks });
 
         // 💡 [핵심] 출력용 페이지일 때
-        if (typeof window !== 'undefined' && window?.location?.pathname.includes('/pdf-full')) {
+        if (typeof window !== 'undefined' && window?.location?.pathname.includes('/pdf')) {
           const allIds = sortedProjects.map((p: any) => p.id);
           setOpenProjectIds(allIds);
 

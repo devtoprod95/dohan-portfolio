@@ -123,7 +123,7 @@ export default function FloatingChat() {
   // [Effect: 초기화]
   // 사용자 고유 ID 생성, 닉네임 로드, 모바일 여부 감지
   useEffect(() => {
-    if (typeof window !== 'undefined' && window?.location?.pathname.includes('/pdf-full')) {
+    if (typeof window !== 'undefined' && window?.location?.pathname.includes('/pdf')) {
       setMounted(false);
       return;
     }
