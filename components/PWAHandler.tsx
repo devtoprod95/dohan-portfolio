@@ -1,15 +1,13 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
-import { MdInstallMobile } from 'react-icons/md';
+import { MdInstallMobile, MdClose } from 'react-icons/md'; // MdClose 추가
 import { SiPwa } from 'react-icons/si';
 
-// PWA 활성화 여부 판단 변수 (전역에서도 사용)
 const isPwaEnabled = typeof window !== 'undefined' && 
   (process.env.NODE_ENV === 'production' || process.env.PWA_READY === 'true');
 
 let savedPrompt: any = null;
 
-// 1. 전역 리스너에 조건부 로직 적용
 if (typeof window !== 'undefined' && isPwaEnabled) {
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
@@ -19,15 +17,19 @@ if (typeof window !== 'undefined' && isPwaEnabled) {
 
 export default function PWAHandler() {
   const [canInstall, setCanInstall] = useState(false);
+  const [isVisible, setIsVisible] = useState(false); // 말풍선 표시 상태 추가
   const deferredPrompt = useRef<any>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
+    // 세션 스토리지 확인 (이전에 닫았는지 여부)
+    const isDismissed = sessionStorage.getItem('pwa_hint_dismissed');
+    if (!isDismissed) setIsVisible(true);
+
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    // 2. 내부 리스너 로직 (이미 전역에서 잡았다면 savedPrompt를 통해 전달받음)
     const handler = (e: any) => {
       e.preventDefault();
       deferredPrompt.current = e;
@@ -56,8 +58,14 @@ export default function PWAHandler() {
     const { outcome } = await deferredPrompt.current.userChoice;
     if (outcome === 'accepted') {
       setCanInstall(false);
-      savedPrompt = null; // 초기화
+      savedPrompt = null;
     }
+  };
+
+  // 닫기 버튼 핸들러
+  const handleDismiss = () => {
+    setIsVisible(false);
+    sessionStorage.setItem('pwa_hint_dismissed', 'true');
   };
 
   if (!canInstall) return null;
@@ -72,10 +80,33 @@ export default function PWAHandler() {
         zIndex: 1000,
       }}
     >
-      <div className="ai-hint-bubble text-primary px-3 py-2 shadow-sm mb-2 fw-bold d-flex align-items-center">
-        <SiPwa className="me-2" style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} />
-        앱으로 설치하고 더 편하게 보세요!
-      </div>
+
+      {isVisible && (
+        <div 
+          className="ai-hint-bubble text-primary px-3 pe-1 py-2 shadow-sm mb-2 fw-bold d-flex align-items-center justify-content-between"
+          style={{ width: 'auto', borderRadius: '12px', background: '#fff' }}
+        >
+          <div className="d-flex align-items-center">
+            <SiPwa className="me-2" style={{ width: 'var(--icon-size-base)', height: 'var(--icon-size-base)' }} />
+            <span style={{ fontSize: '0.9rem' }}>앱으로 설치하고 더 편하게 보세요!</span>
+          </div>
+          
+          {/* 우측 X 버튼 */}
+          <div 
+            onClick={handleDismiss}
+            style={{ 
+              cursor: 'pointer',
+              padding: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              pointerEvents: 'auto', // 3. 클릭 이벤트를 강제로 활성화
+            }}
+          >
+            <MdClose size={18} />
+          </div>
+        </div>
+      )}
 
       <button 
         className="btn btn-primary rounded-circle shadow-lg d-flex align-items-center justify-content-center border-0 p-0" 
